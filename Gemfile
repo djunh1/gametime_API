@@ -40,8 +40,13 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+#My Gems
+gem 'figaro', '~> 1.1', '>= 1.1.1'
 gem 'devise', '~> 4.2'
 gem 'omniauth', '~> 1.6'
 gem 'paperclip', '~>5.1.0'
 gem 'geocoder', '~>1.4'
 gem 'stripe', '~> 3.0.0'
+
+gem 'active_model_serializers', "~> 0.10.0", require: true
+gem 'koala', '~> 3.0.0'
