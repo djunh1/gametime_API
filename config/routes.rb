@@ -13,7 +13,13 @@ Rails.application.routes.draw do
           get '/reservations' => 'reservations#reservations_by_game'
         end
       end
-      resources :reservations
+
+      resources :reservations do
+        member do
+          post '/approve' => 'reservations#approve'
+          post '/decline' => 'reservations#decline'
+        end
+      end
     end
   end
 end

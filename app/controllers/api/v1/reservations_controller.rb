@@ -1,6 +1,7 @@
 class Api::V1::ReservationsController < ApplicationController
   # new 9
   before_action :authenticate_with_token!
+  before_action :set_reservation, only: [:approve, :decline]
 
   def create
     game = Game.find(params[:game_id])
@@ -43,8 +44,30 @@ class Api::V1::ReservationsController < ApplicationController
     render json: {reservations: reservations, is_success: true}, status: :ok
 
   end
+  #new 14
+  def approve
+    if @reservation.game.user_id == current_user.id
+      charge(@reservation.game, @reservation)
+      render json: {is_success: true}, status: :ok
+    else
+      render json: {error: "No Permission", is_success: false}, status: 404
+    end
+  end
+
+  def decline
+    if @reservation.game.user_id == current_user.id
+      @reservation.Declined!
+      render json: {is_success: true}, status: :ok
+    else
+      render json: {error: "No Permission", is_success: false}, status: 404
+    end
+  end
 
   private
+
+  def set_reservation
+    @reservation = Reservation.find(params[:id])
+  end
 
   def reservation_params
     params.require(:reservation).permit(:start_date)
