@@ -5,8 +5,14 @@ Rails.application.routes.draw do
       get '/logout' => 'users#logout'
       post '/facebook' => 'users#facebook'
       post '/payments' => 'users#add_card'
+      get "/listings" => 'games#your_listings'
 
-      resources :games
+      resources :games do
+        #new 13
+        member do
+          get '/reservations' => 'reservations#reservations_by_game'
+        end
+      end
       resources :reservations
     end
   end

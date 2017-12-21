@@ -72,4 +72,13 @@ class Api::V1::GamesController < ApplicationController
     end
 
   end
+  # new 10
+  def your_listings
+    games = current_user.games
+    render json: {
+      games: games.map { |g| g.attributes.merge(image: g.cover_photo('medium'), instant: g.instant != "Request") },
+      is_success: true
+    }, status: :ok
+
+  end
 end
